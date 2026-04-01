@@ -1,1 +1,1 @@
-# furniture-board-calculator-dashboard
+# furniture-board-dashboard
