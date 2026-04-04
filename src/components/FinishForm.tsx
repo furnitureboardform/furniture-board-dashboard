@@ -4,7 +4,6 @@ import { db } from '../lib/firebase';
 import type { FinishType } from '../lib/types';
 
 const FINISH_TYPES: { value: FinishType; label: string }[] = [
-  { value: 'okleina', label: 'Okleina' },
   { value: 'laminat', label: 'Laminat' },
   { value: 'akryl', label: 'Akryl' },
   { value: 'lakier', label: 'Lakier' },
@@ -17,7 +16,7 @@ interface Props {
 export function FinishForm({ onSaved }: Props) {
   const [label, setLabel] = useState('');
   const [brand, setBrand] = useState('');
-  const [type, setType] = useState<FinishType>('okleina');
+  const [type, setType] = useState<FinishType>('laminat');
   const [price, setPrice] = useState('');
   const [imageBase64, setImageBase64] = useState<string | undefined>(undefined);
   const [saving, setSaving] = useState(false);
@@ -57,7 +56,7 @@ export function FinishForm({ onSaved }: Props) {
       });
       setLabel('');
       setBrand('');
-      setType('okleina');
+      setType('laminat');
       setPrice('');
       setImageBase64(undefined);
       onSaved();

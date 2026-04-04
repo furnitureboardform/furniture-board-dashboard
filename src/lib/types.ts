@@ -1,4 +1,4 @@
-export type FinishType = 'laminat' | 'okleina' | 'akryl' | 'lakier';
+export type FinishType = 'laminat' | 'akryl' | 'lakier';
 
 export interface FinishOption {
   id: string;

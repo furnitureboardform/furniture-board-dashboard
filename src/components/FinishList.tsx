@@ -11,7 +11,6 @@ const TYPE_LABELS: Record<string, string> = {
 };
 
 const FINISH_TYPES: { value: FinishType; label: string }[] = [
-  { value: 'okleina', label: 'Okleina' },
   { value: 'laminat', label: 'Laminat' },
   { value: 'akryl', label: 'Akryl' },
   { value: 'lakier', label: 'Lakier' },
@@ -32,7 +31,7 @@ export function FinishList({ refreshKey }: Props) {
   // edit form state
   const [editLabel, setEditLabel] = useState('');
   const [editBrand, setEditBrand] = useState('');
-  const [editType, setEditType] = useState<FinishType>('okleina');
+  const [editType, setEditType] = useState<FinishType>('laminat');
   const [editPrice, setEditPrice] = useState('');
   const [editImageBase64, setEditImageBase64] = useState<string | undefined>(undefined);
   const [saving, setSaving] = useState(false);
