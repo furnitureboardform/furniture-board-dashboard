@@ -38,6 +38,7 @@ export function HandleForm({ onSaved }: Props) {
       const w = parseFloat(edgeWidthMm.replace(',', '.'));
       if (isNaN(w) || w <= 0) { setError('Podaj szerokość frezowania dla uchwytu krawędziowego.'); return; }
     }
+    if (!imageBase64) { setError('Dodaj zdjęcie uchwytu.'); return; }
 
     setSaving(true);
     try {
@@ -133,7 +134,7 @@ export function HandleForm({ onSaved }: Props) {
       )}
 
       <div className="field">
-        <label className="field-label">Zdjęcie (opcjonalne)</label>
+        <label className="field-label">Zdjęcie *</label>
         <input
           className="field-input"
           type="file"

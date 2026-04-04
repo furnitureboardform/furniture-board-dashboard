@@ -32,6 +32,7 @@ export function HdfForm({ onSaved }: Props) {
     if (!label.trim()) { setError('Podaj nazwę płyty HDF.'); return; }
     if (!brand.trim()) { setError('Podaj nazwę firmy.'); return; }
     if (isNaN(priceNum) || priceNum <= 0) { setError('Podaj prawidłową cenę.'); return; }
+    if (!imageBase64) { setError('Dodaj zdjęcie płyty HDF.'); return; }
 
     setSaving(true);
     try {
@@ -98,7 +99,7 @@ export function HdfForm({ onSaved }: Props) {
       </div>
 
       <div className="field">
-        <label className="field-label">Zdjęcie (opcjonalne)</label>
+        <label className="field-label">Zdjęcie *</label>
         <input
           className="field-input"
           type="file"
