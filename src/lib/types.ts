@@ -21,4 +21,13 @@ export interface HandleOption {
   createdAt?: number;
 }
 
-export type ActiveTab = 'finishes' | 'handles';
+export interface HdfOption {
+  id: string;
+  label: string;
+  brand: string;
+  pricePerSqmPln: number;
+  imageBase64?: string;
+  createdAt?: number;
+}
+
+export type ActiveTab = 'finishes' | 'handles' | 'hdf';
