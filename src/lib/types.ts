@@ -42,4 +42,14 @@ export interface DrawerOption {
   createdAt?: number;
 }
 
-export type ActiveTab = 'finishes' | 'handles' | 'hdf' | 'drawers';
+export interface CountertopOption {
+  id: string;
+  label: string;
+  brand: string;
+  thicknessMm: number;
+  pricePerSqmPln: number;
+  imageBase64?: string;
+  createdAt?: number;
+}
+
+export type ActiveTab = 'finishes' | 'handles' | 'hdf' | 'drawers' | 'countertops';
