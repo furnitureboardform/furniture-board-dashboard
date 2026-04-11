@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { collection, getDocs, orderBy, query, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import type { FinishOption, FinishType } from '../lib/types';
+import { FileInput } from './FileInput';
 
 const TYPE_LABELS: Record<string, string> = {
   okleina: 'Okleina',
@@ -191,7 +192,7 @@ export function FinishList({ refreshKey }: Props) {
               </div>
               <div className="field">
                 <label className="field-label">Zdjęcie</label>
-                <input className="field-input" type="file" accept="image/*" onChange={handleEditImageChange} />
+                <FileInput onChange={handleEditImageChange} />
                 {editImageBase64 && <img src={editImageBase64} alt="Podgląd" className="img-preview" />}
               </div>
               <div className="modal-actions">

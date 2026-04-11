@@ -30,4 +30,16 @@ export interface HdfOption {
   createdAt?: number;
 }
 
-export type ActiveTab = 'finishes' | 'handles' | 'hdf';
+export interface DrawerOption {
+  id: string;
+  label: string;
+  brand: string;
+  type: string;
+  depthMm: number;
+  heightMm: number;
+  pricePln: number;
+  imageBase64?: string;
+  createdAt?: number;
+}
+
+export type ActiveTab = 'finishes' | 'handles' | 'hdf' | 'drawers';

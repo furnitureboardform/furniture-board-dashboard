@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
+import { FileInput } from './FileInput';
 
 interface Props {
   onSaved: () => void;
@@ -100,12 +101,7 @@ export function HdfForm({ onSaved }: Props) {
 
       <div className="field">
         <label className="field-label">Zdjęcie *</label>
-        <input
-          className="field-input"
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-        />
+        <FileInput onChange={handleImageChange} />
         {imageBase64 && (
           <img src={imageBase64} alt="Podgląd" className="img-preview" />
         )}

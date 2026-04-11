@@ -443,6 +443,28 @@ body {
   background: #3a3a3a;
 }
 
+/* ─── File input ─── */
+.file-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.file-input-btn {
+  padding: 5px 12px;
+  font-size: 12px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.file-input-text {
+  font-size: 12px;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 /* ─── States ─── */
 .loading, .empty {
   padding: 40px 20px;

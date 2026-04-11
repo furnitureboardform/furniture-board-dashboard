@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { FinishForm } from './components/FinishForm';
 import { HandleForm } from './components/HandleForm';
 import { HdfForm } from './components/HdfForm';
+import { DrawerForm } from './components/DrawerForm';
 import { FinishList } from './components/FinishList';
 import { HandleList } from './components/HandleList';
 import { HdfList } from './components/HdfList';
+import { DrawerList } from './components/DrawerList';
 import type { ActiveTab } from './lib/types';
 
 export function App() {
@@ -39,6 +41,12 @@ export function App() {
             >
               Płyty HDF
             </button>
+            <button
+              className={`tab ${activeTab === 'drawers' ? 'tab-active' : ''}`}
+              onClick={() => setActiveTab('drawers')}
+            >
+              Szuflady
+            </button>
           </nav>
         </div>
       </header>
@@ -49,12 +57,14 @@ export function App() {
             {activeTab === 'finishes' && <FinishForm onSaved={handleSaved} />}
             {activeTab === 'handles' && <HandleForm onSaved={handleSaved} />}
             {activeTab === 'hdf' && <HdfForm onSaved={handleSaved} />}
+            {activeTab === 'drawers' && <DrawerForm onSaved={handleSaved} />}
           </aside>
 
           <section className="content">
             {activeTab === 'finishes' && <FinishList refreshKey={refreshKey} />}
             {activeTab === 'handles' && <HandleList refreshKey={refreshKey} />}
             {activeTab === 'hdf' && <HdfList refreshKey={refreshKey} />}
+            {activeTab === 'drawers' && <DrawerList refreshKey={refreshKey} />}
           </section>
         </div>
       </main>
