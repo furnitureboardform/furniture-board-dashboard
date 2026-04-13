@@ -52,4 +52,19 @@ export interface CountertopOption {
   createdAt?: number;
 }
 
-export type ActiveTab = 'finishes' | 'handles' | 'hdf' | 'drawers' | 'countertops';
+export type CargoType = 'niskie' | 'wysokie';
+
+export interface CargoOption {
+  id: string;
+  label: string;
+  brand: string;
+  type: CargoType;
+  heightMm: number;
+  widthMm: number;
+  depthMm: number;
+  pricePln: number;
+  imageBase64?: string;
+  createdAt?: number;
+}
+
+export type ActiveTab = 'finishes' | 'handles' | 'hdf' | 'drawers' | 'countertops' | 'cargo';

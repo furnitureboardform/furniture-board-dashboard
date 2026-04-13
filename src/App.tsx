@@ -9,6 +9,8 @@ import { HdfList } from './components/HdfList';
 import { DrawerList } from './components/DrawerList';
 import { CountertopForm } from './components/CountertopForm';
 import { CountertopList } from './components/CountertopList';
+import { CargoForm } from './components/CargoForm';
+import { CargoList } from './components/CargoList';
 import type { ActiveTab } from './lib/types';
 
 export function App() {
@@ -55,6 +57,12 @@ export function App() {
             >
               Blaty kuchenne
             </button>
+            <button
+              className={`tab ${activeTab === 'cargo' ? 'tab-active' : ''}`}
+              onClick={() => setActiveTab('cargo')}
+            >
+              Cargo
+            </button>
           </nav>
         </div>
       </header>
@@ -67,6 +75,7 @@ export function App() {
             {activeTab === 'hdf' && <HdfForm onSaved={handleSaved} />}
             {activeTab === 'drawers' && <DrawerForm onSaved={handleSaved} />}
             {activeTab === 'countertops' && <CountertopForm onSaved={handleSaved} />}
+            {activeTab === 'cargo' && <CargoForm onSaved={handleSaved} />}
           </aside>
 
           <section className="content">
@@ -75,6 +84,7 @@ export function App() {
             {activeTab === 'hdf' && <HdfList refreshKey={refreshKey} />}
             {activeTab === 'drawers' && <DrawerList refreshKey={refreshKey} />}
             {activeTab === 'countertops' && <CountertopList refreshKey={refreshKey} />}
+            {activeTab === 'cargo' && <CargoList refreshKey={refreshKey} />}
           </section>
         </div>
       </main>
