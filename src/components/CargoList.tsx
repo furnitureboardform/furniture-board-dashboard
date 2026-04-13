@@ -19,7 +19,8 @@ export function CargoList({ refreshKey }: Props) {
   const [editLabel, setEditLabel] = useState('');
   const [editBrand, setEditBrand] = useState('');
   const [editType, setEditType] = useState<CargoType>('niskie');
-  const [editHeight, setEditHeight] = useState('');
+  const [editHeightFrom, setEditHeightFrom] = useState('');
+  const [editHeightTo, setEditHeightTo] = useState('');
   const [editWidth, setEditWidth] = useState('');
   const [editDepth, setEditDepth] = useState('');
   const [editPrice, setEditPrice] = useState('');
@@ -58,7 +59,8 @@ export function CargoList({ refreshKey }: Props) {
     setEditLabel(item.label);
     setEditBrand(item.brand);
     setEditType(item.type);
-    setEditHeight(String(item.heightMm));
+    setEditHeightFrom(String(item.heightFromMm));
+    setEditHeightTo(String(item.heightToMm));
     setEditWidth(String(item.widthMm));
     setEditDepth(String(item.depthMm));
     setEditPrice(String(item.pricePln));
@@ -83,14 +85,16 @@ export function CargoList({ refreshKey }: Props) {
     if (!editingItem) return;
     setEditError('');
 
-    const heightNum = parseFloat(editHeight.replace(',', '.'));
+    const heightFromNum = parseFloat(editHeightFrom.replace(',', '.'));
+    const heightToNum = parseFloat(editHeightTo.replace(',', '.'));
     const widthNum = parseFloat(editWidth.replace(',', '.'));
     const depthNum = parseFloat(editDepth.replace(',', '.'));
     const priceNum = parseFloat(editPrice.replace(',', '.'));
 
     if (!editLabel.trim()) { setEditError('Podaj nazwę cargo.'); return; }
     if (!editBrand.trim()) { setEditError('Podaj nazwę firmy.'); return; }
-    if (isNaN(heightNum) || heightNum <= 0) { setEditError('Podaj prawidłową wysokość.'); return; }
+    if (isNaN(heightFromNum) || heightFromNum <= 0) { setEditError('Podaj prawidłową wysokość od.'); return; }
+    if (isNaN(heightToNum) || heightToNum <= 0) { setEditError('Podaj prawidłową wysokość do.'); return; }
     if (isNaN(widthNum) || widthNum <= 0) { setEditError('Podaj prawidłową szerokość.'); return; }
     if (isNaN(depthNum) || depthNum <= 0) { setEditError('Podaj prawidłową głębokość.'); return; }
     if (isNaN(priceNum) || priceNum <= 0) { setEditError('Podaj prawidłową cenę.'); return; }
@@ -102,7 +106,8 @@ export function CargoList({ refreshKey }: Props) {
         label: editLabel.trim(),
         brand: editBrand.trim(),
         type: editType,
-        heightMm: heightNum,
+        heightFromMm: heightFromNum,
+        heightToMm: heightToNum,
         widthMm: widthNum,
         depthMm: depthNum,
         pricePln: priceNum,
@@ -110,7 +115,7 @@ export function CargoList({ refreshKey }: Props) {
       });
       setItems(prev => prev.map(i =>
         i.docId === editingItem.docId
-          ? { ...i, label: editLabel.trim(), brand: editBrand.trim(), type: editType, heightMm: heightNum, widthMm: widthNum, depthMm: depthNum, pricePln: priceNum, imageBase64: editImageBase64 }
+          ? { ...i, label: editLabel.trim(), brand: editBrand.trim(), type: editType, heightFromMm: heightFromNum, heightToMm: heightToNum, widthMm: widthNum, depthMm: depthNum, pricePln: priceNum, imageBase64: editImageBase64 }
           : i
       ));
       closeEdit();
@@ -142,7 +147,7 @@ export function CargoList({ refreshKey }: Props) {
                 <div className="item-brand">{item.brand}</div>
                 <div className="item-meta">
                   <span className="badge">{item.type}</span>
-                  <span className="badge">{item.heightMm}×{item.widthMm}×{item.depthMm} mm</span>
+                  <span className="badge">{item.heightFromMm}-{item.heightToMm}×{item.widthMm}×{item.depthMm} mm</span>
                   <span className="item-price">{item.pricePln?.toFixed(2)} PLN</span>
                 </div>
               </div>
@@ -190,8 +195,12 @@ export function CargoList({ refreshKey }: Props) {
                 </select>
               </div>
               <div className="field">
-                <label className="field-label">Wysokość (mm) *</label>
-                <input className="field-input" type="text" inputMode="decimal" value={editHeight} onChange={e => setEditHeight(e.target.value)} />
+                <label className="field-label">Wysokość Od (mm) *</label>
+                <input className="field-input" type="text" inputMode="decimal" value={editHeightFrom} onChange={e => setEditHeightFrom(e.target.value)} />
+              </div>
+              <div className="field">
+                <label className="field-label">Wysokość Do (mm) *</label>
+                <input className="field-input" type="text" inputMode="decimal" value={editHeightTo} onChange={e => setEditHeightTo(e.target.value)} />
               </div>
               <div className="field">
                 <label className="field-label">Szerokość (mm) *</label>

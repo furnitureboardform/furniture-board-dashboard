@@ -12,7 +12,8 @@ export function CargoForm({ onSaved }: Props) {
   const [label, setLabel] = useState('');
   const [brand, setBrand] = useState('');
   const [type, setType] = useState<CargoType>('niskie');
-  const [height, setHeight] = useState('');
+  const [heightFrom, setHeightFrom] = useState('');
+  const [heightTo, setHeightTo] = useState('');
   const [width, setWidth] = useState('');
   const [depth, setDepth] = useState('');
   const [price, setPrice] = useState('');
@@ -32,14 +33,16 @@ export function CargoForm({ onSaved }: Props) {
     e.preventDefault();
     setError('');
 
-    const heightNum = parseFloat(height.replace(',', '.'));
+    const heightFromNum = parseFloat(heightFrom.replace(',', '.'));
+    const heightToNum = parseFloat(heightTo.replace(',', '.'));
     const widthNum = parseFloat(width.replace(',', '.'));
     const depthNum = parseFloat(depth.replace(',', '.'));
     const priceNum = parseFloat(price.replace(',', '.'));
 
     if (!label.trim()) { setError('Podaj nazwę cargo.'); return; }
     if (!brand.trim()) { setError('Podaj nazwę firmy.'); return; }
-    if (isNaN(heightNum) || heightNum <= 0) { setError('Podaj prawidłową wysokość.'); return; }
+    if (isNaN(heightFromNum) || heightFromNum <= 0) { setError('Podaj prawidłową wysokość od.'); return; }
+    if (isNaN(heightToNum) || heightToNum <= 0) { setError('Podaj prawidłową wysokość do.'); return; }
     if (isNaN(widthNum) || widthNum <= 0) { setError('Podaj prawidłową szerokość.'); return; }
     if (isNaN(depthNum) || depthNum <= 0) { setError('Podaj prawidłową głębokość.'); return; }
     if (isNaN(priceNum) || priceNum <= 0) { setError('Podaj prawidłową cenę.'); return; }
@@ -53,7 +56,8 @@ export function CargoForm({ onSaved }: Props) {
         label: label.trim(),
         brand: brand.trim(),
         type,
-        heightMm: heightNum,
+        heightFromMm: heightFromNum,
+        heightToMm: heightToNum,
         widthMm: widthNum,
         depthMm: depthNum,
         pricePln: priceNum,
@@ -63,7 +67,8 @@ export function CargoForm({ onSaved }: Props) {
       setLabel('');
       setBrand('');
       setType('niskie');
-      setHeight('');
+      setHeightFrom('');
+      setHeightTo('');
       setWidth('');
       setDepth('');
       setPrice('');
@@ -118,14 +123,26 @@ export function CargoForm({ onSaved }: Props) {
       </div>
 
       <div className="field">
-        <label className="field-label">Wysokość (mm) *</label>
+        <label className="field-label">Wysokość Od (mm) *</label>
+        <input
+          className="field-input"
+          type="text"
+          inputMode="decimal"
+          placeholder="np. 300"
+          value={heightFrom}
+          onChange={e => setHeightFrom(e.target.value)}
+        />
+      </div>
+
+      <div className="field">
+        <label className="field-label">Wysokość Do (mm) *</label>
         <input
           className="field-input"
           type="text"
           inputMode="decimal"
           placeholder="np. 500"
-          value={height}
-          onChange={e => setHeight(e.target.value)}
+          value={heightTo}
+          onChange={e => setHeightTo(e.target.value)}
         />
       </div>
 

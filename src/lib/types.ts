@@ -59,7 +59,8 @@ export interface CargoOption {
   label: string;
   brand: string;
   type: CargoType;
-  heightMm: number;
+  heightFromMm: number;
+  heightToMm: number;
   widthMm: number;
   depthMm: number;
   pricePln: number;
