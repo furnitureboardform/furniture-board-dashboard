@@ -11,6 +11,8 @@ import { CountertopForm } from './components/CountertopForm';
 import { CountertopList } from './components/CountertopList';
 import { CargoForm } from './components/CargoForm';
 import { CargoList } from './components/CargoList';
+import { CornerSystemForm } from './components/CornerSystemForm';
+import { CornerSystemList } from './components/CornerSystemList';
 import type { ActiveTab } from './lib/types';
 
 export function App() {
@@ -63,6 +65,12 @@ export function App() {
             >
               Cargo
             </button>
+            <button
+              className={`tab ${activeTab === 'cornerSystems' ? 'tab-active' : ''}`}
+              onClick={() => setActiveTab('cornerSystems')}
+            >
+              Systemy narożne
+            </button>
           </nav>
         </div>
       </header>
@@ -76,6 +84,7 @@ export function App() {
             {activeTab === 'drawers' && <DrawerForm onSaved={handleSaved} />}
             {activeTab === 'countertops' && <CountertopForm onSaved={handleSaved} />}
             {activeTab === 'cargo' && <CargoForm onSaved={handleSaved} />}
+            {activeTab === 'cornerSystems' && <CornerSystemForm onSaved={handleSaved} />}
           </aside>
 
           <section className="content">
@@ -85,6 +94,7 @@ export function App() {
             {activeTab === 'drawers' && <DrawerList refreshKey={refreshKey} />}
             {activeTab === 'countertops' && <CountertopList refreshKey={refreshKey} />}
             {activeTab === 'cargo' && <CargoList refreshKey={refreshKey} />}
+            {activeTab === 'cornerSystems' && <CornerSystemList refreshKey={refreshKey} />}
           </section>
         </div>
       </main>

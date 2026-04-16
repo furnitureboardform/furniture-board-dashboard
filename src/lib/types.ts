@@ -68,4 +68,20 @@ export interface CargoOption {
   createdAt?: number;
 }
 
-export type ActiveTab = 'finishes' | 'handles' | 'hdf' | 'drawers' | 'countertops' | 'cargo';
+export type CornerSystemType = 'prawy' | 'lewy';
+
+export interface CornerSystemOption {
+  id: string;
+  label: string;
+  brand: string;
+  type: CornerSystemType;
+  heightFromMm: number;
+  heightToMm: number;
+  widthMm: number;
+  depthMm: number;
+  pricePln: number;
+  imageBase64?: string;
+  createdAt?: number;
+}
+
+export type ActiveTab = 'finishes' | 'handles' | 'hdf' | 'drawers' | 'countertops' | 'cargo' | 'cornerSystems';
