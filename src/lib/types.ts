@@ -68,7 +68,7 @@ export interface CargoOption {
   createdAt?: number;
 }
 
-export type CornerSystemType = 'prawy' | 'lewy';
+export type CornerSystemType = 'prawy' | 'lewy' | 'dwustronny';
 export type CornerSystemModelType = 'nerka' | 'obrotowy' | 'wysuwany';
 
 export interface CornerSystemOption {

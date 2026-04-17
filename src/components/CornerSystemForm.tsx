@@ -7,6 +7,7 @@ import type { CornerSystemType, CornerSystemModelType } from '../lib/types';
 export const CORNER_SYSTEM_TYPE_OPTIONS: { value: CornerSystemType; label: string }[] = [
   { value: 'prawy', label: 'Prawy' },
   { value: 'lewy', label: 'Lewy' },
+  { value: 'dwustronny', label: 'Dwustronny' },
 ];
 
 export const CORNER_SYSTEM_MODEL_OPTIONS: { value: CornerSystemModelType; label: string }[] = [
