@@ -69,12 +69,14 @@ export interface CargoOption {
 }
 
 export type CornerSystemType = 'prawy' | 'lewy';
+export type CornerSystemModelType = 'nerka' | 'obrotowy' | 'wysuwany';
 
 export interface CornerSystemOption {
   id: string;
   label: string;
   brand: string;
   type: CornerSystemType;
+  modelType: CornerSystemModelType;
   heightFromMm: number;
   heightToMm: number;
   widthMm: number;

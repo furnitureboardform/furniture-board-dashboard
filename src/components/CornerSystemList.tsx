@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { collection, getDocs, orderBy, query, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../lib/firebase';
-import type { CornerSystemOption, CornerSystemType } from '../lib/types';
+import type { CornerSystemOption, CornerSystemType, CornerSystemModelType } from '../lib/types';
 import { FileInput } from './FileInput';
-import { CORNER_SYSTEM_TYPE_OPTIONS } from './CornerSystemForm';
+import { CORNER_SYSTEM_TYPE_OPTIONS, CORNER_SYSTEM_MODEL_OPTIONS } from './CornerSystemForm';
 
 type Item = CornerSystemOption & { docId: string };
 
@@ -20,6 +20,7 @@ export function CornerSystemList({ refreshKey }: Props) {
   const [editLabel, setEditLabel] = useState('');
   const [editBrand, setEditBrand] = useState('');
   const [editType, setEditType] = useState<CornerSystemType>('prawy');
+  const [editModelType, setEditModelType] = useState<CornerSystemModelType | ''>('');
   const [editHeightFrom, setEditHeightFrom] = useState('');
   const [editHeightTo, setEditHeightTo] = useState('');
   const [editWidth, setEditWidth] = useState('');
@@ -60,6 +61,7 @@ export function CornerSystemList({ refreshKey }: Props) {
     setEditLabel(item.label);
     setEditBrand(item.brand);
     setEditType(item.type);
+    setEditModelType(item.modelType ?? '');
     setEditHeightFrom(String(item.heightFromMm));
     setEditHeightTo(String(item.heightToMm));
     setEditWidth(String(item.widthMm));
@@ -109,6 +111,7 @@ export function CornerSystemList({ refreshKey }: Props) {
         label: editLabel.trim(),
         brand: editBrand.trim(),
         type: editType,
+        modelType: editModelType || null,
         heightFromMm: heightFromNum,
         heightToMm: heightToNum,
         widthMm: widthNum,
@@ -118,7 +121,7 @@ export function CornerSystemList({ refreshKey }: Props) {
       });
       setItems(prev => prev.map(i =>
         i.docId === editingItem.docId
-          ? { ...i, label: editLabel.trim(), brand: editBrand.trim(), type: editType, heightFromMm: heightFromNum, heightToMm: heightToNum, widthMm: widthNum, depthMm: depthNum, pricePln: priceNum, imageBase64: editImageBase64 }
+          ? { ...i, label: editLabel.trim(), brand: editBrand.trim(), type: editType, modelType: editModelType || i.modelType, heightFromMm: heightFromNum, heightToMm: heightToNum, widthMm: widthNum, depthMm: depthNum, pricePln: priceNum, imageBase64: editImageBase64 }
           : i
       ));
       closeEdit();
@@ -149,7 +152,8 @@ export function CornerSystemList({ refreshKey }: Props) {
                 <div className="item-name">{item.label}</div>
                 <div className="item-brand">{item.brand}</div>
                 <div className="item-meta">
-                  <span className="badge">{item.type}</span>
+                  <span className="badge">{CORNER_SYSTEM_TYPE_OPTIONS.find(o => o.value === item.type)?.label ?? item.type}</span>
+                  {item.modelType && <span className="badge">{CORNER_SYSTEM_MODEL_OPTIONS.find(o => o.value === item.modelType)?.label ?? item.modelType}</span>}
                   <span className="badge">{item.heightFromMm}-{item.heightToMm}×{item.widthMm}×{item.depthMm} mm</span>
                   <span className="item-price">{item.pricePln?.toFixed(2)} PLN</span>
                 </div>
@@ -191,9 +195,18 @@ export function CornerSystemList({ refreshKey }: Props) {
                 <input className="field-input" type="text" value={editBrand} onChange={e => setEditBrand(e.target.value)} />
               </div>
               <div className="field">
-                <label className="field-label">Typ *</label>
+                <label className="field-label">Wysuwanie systemu *</label>
                 <select className="field-input" value={editType} onChange={e => setEditType(e.target.value as CornerSystemType)}>
                   {CORNER_SYSTEM_TYPE_OPTIONS.map(o => (
+                    <option key={o.value} value={o.value}>{o.label}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="field">
+                <label className="field-label">Typ modelu</label>
+                <select className="field-input" value={editModelType} onChange={e => setEditModelType(e.target.value as CornerSystemModelType | '')}>
+                  <option value="">— wybierz —</option>
+                  {CORNER_SYSTEM_MODEL_OPTIONS.map(o => (
                     <option key={o.value} value={o.value}>{o.label}</option>
                   ))}
                 </select>

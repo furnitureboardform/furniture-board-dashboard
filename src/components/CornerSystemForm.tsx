@@ -2,11 +2,17 @@ import { useState } from 'react';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { FileInput } from './FileInput';
-import type { CornerSystemType } from '../lib/types';
+import type { CornerSystemType, CornerSystemModelType } from '../lib/types';
 
 export const CORNER_SYSTEM_TYPE_OPTIONS: { value: CornerSystemType; label: string }[] = [
   { value: 'prawy', label: 'Prawy' },
   { value: 'lewy', label: 'Lewy' },
+];
+
+export const CORNER_SYSTEM_MODEL_OPTIONS: { value: CornerSystemModelType; label: string }[] = [
+  { value: 'nerka', label: 'Nerka' },
+  { value: 'obrotowy', label: 'Obrotowy' },
+  { value: 'wysuwany', label: 'Wysuwany' },
 ];
 
 interface Props {
@@ -17,6 +23,7 @@ export function CornerSystemForm({ onSaved }: Props) {
   const [label, setLabel] = useState('');
   const [brand, setBrand] = useState('');
   const [type, setType] = useState<CornerSystemType>('prawy');
+  const [modelType, setModelType] = useState<CornerSystemModelType>('nerka');
   const [heightFrom, setHeightFrom] = useState('');
   const [heightTo, setHeightTo] = useState('');
   const [width, setWidth] = useState('');
@@ -63,6 +70,7 @@ export function CornerSystemForm({ onSaved }: Props) {
         label: label.trim(),
         brand: brand.trim(),
         type,
+        modelType,
         heightFromMm: heightFromNum,
         heightToMm: heightToNum,
         widthMm: widthNum,
@@ -74,6 +82,7 @@ export function CornerSystemForm({ onSaved }: Props) {
       setLabel('');
       setBrand('');
       setType('prawy');
+      setModelType('nerka');
       setHeightFrom('');
       setHeightTo('');
       setWidth('');
@@ -118,13 +127,26 @@ export function CornerSystemForm({ onSaved }: Props) {
       </div>
 
       <div className="field">
-        <label className="field-label">Typ *</label>
+        <label className="field-label">Wysuwanie systemu *</label>
         <select
           className="field-input"
           value={type}
           onChange={e => setType(e.target.value as CornerSystemType)}
         >
           {CORNER_SYSTEM_TYPE_OPTIONS.map(o => (
+            <option key={o.value} value={o.value}>{o.label}</option>
+          ))}
+        </select>
+      </div>
+
+      <div className="field">
+        <label className="field-label">Typ modelu *</label>
+        <select
+          className="field-input"
+          value={modelType}
+          onChange={e => setModelType(e.target.value as CornerSystemModelType)}
+        >
+          {CORNER_SYSTEM_MODEL_OPTIONS.map(o => (
             <option key={o.value} value={o.value}>{o.label}</option>
           ))}
         </select>
