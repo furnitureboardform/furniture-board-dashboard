@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
-import type { FinishType } from '../lib/types';
+import type { FinishType, FinishThicknessMm } from '../lib/types';
 import { FileInput } from './FileInput';
 
 const FINISH_TYPES: { value: FinishType; label: string }[] = [
@@ -18,6 +18,7 @@ export function FinishForm({ onSaved }: Props) {
   const [label, setLabel] = useState('');
   const [brand, setBrand] = useState('');
   const [type, setType] = useState<FinishType>('laminat');
+  const [thicknessMm, setThicknessMm] = useState<FinishThicknessMm>(18);
   const [price, setPrice] = useState('');
   const [imageBase64, setImageBase64] = useState<string | undefined>(undefined);
   const [saving, setSaving] = useState(false);
@@ -51,6 +52,7 @@ export function FinishForm({ onSaved }: Props) {
         label: label.trim(),
         brand: brand.trim(),
         type,
+        thicknessMm,
         pricePerSqmPln: priceNum,
         imageBase64: imageBase64 ?? null,
         createdAt: serverTimestamp(),
@@ -58,6 +60,7 @@ export function FinishForm({ onSaved }: Props) {
       setLabel('');
       setBrand('');
       setType('laminat');
+      setThicknessMm(18);
       setPrice('');
       setImageBase64(undefined);
       onSaved();
@@ -107,6 +110,18 @@ export function FinishForm({ onSaved }: Props) {
           {FINISH_TYPES.map(t => (
             <option key={t.value} value={t.value}>{t.label}</option>
           ))}
+        </select>
+      </div>
+
+      <div className="field">
+        <label className="field-label">Grubość okleiny (mm)</label>
+        <select
+          className="field-input"
+          value={thicknessMm}
+          onChange={e => setThicknessMm(Number(e.target.value) as FinishThicknessMm)}
+        >
+          <option value={16}>16 mm</option>
+          <option value={18}>18 mm</option>
         </select>
       </div>
 

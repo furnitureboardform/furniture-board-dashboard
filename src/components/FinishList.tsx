@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { collection, getDocs, orderBy, query, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../lib/firebase';
-import type { FinishOption, FinishType } from '../lib/types';
+import type { FinishOption, FinishType, FinishThicknessMm } from '../lib/types';
 import { FileInput } from './FileInput';
 
 const TYPE_LABELS: Record<string, string> = {
@@ -33,6 +33,7 @@ export function FinishList({ refreshKey }: Props) {
   const [editLabel, setEditLabel] = useState('');
   const [editBrand, setEditBrand] = useState('');
   const [editType, setEditType] = useState<FinishType>('laminat');
+  const [editThicknessMm, setEditThicknessMm] = useState<FinishThicknessMm>(18);
   const [editPrice, setEditPrice] = useState('');
   const [editImageBase64, setEditImageBase64] = useState<string | undefined>(undefined);
   const [saving, setSaving] = useState(false);
@@ -69,6 +70,7 @@ export function FinishList({ refreshKey }: Props) {
     setEditLabel(item.label);
     setEditBrand(item.brand);
     setEditType(item.type);
+    setEditThicknessMm(item.thicknessMm ?? 18);
     setEditPrice(String(item.pricePerSqmPln));
     setEditImageBase64(item.imageBase64);
     setEditError('');
@@ -102,12 +104,13 @@ export function FinishList({ refreshKey }: Props) {
         label: editLabel.trim(),
         brand: editBrand.trim(),
         type: editType,
+        thicknessMm: editThicknessMm,
         pricePerSqmPln: priceNum,
         imageBase64: editImageBase64 ?? null,
       });
       setItems(prev => prev.map(i =>
         i.docId === editingItem.docId
-          ? { ...i, label: editLabel.trim(), brand: editBrand.trim(), type: editType, pricePerSqmPln: priceNum, imageBase64: editImageBase64 }
+          ? { ...i, label: editLabel.trim(), brand: editBrand.trim(), type: editType, thicknessMm: editThicknessMm, pricePerSqmPln: priceNum, imageBase64: editImageBase64 }
           : i
       ));
       closeEdit();
@@ -139,6 +142,7 @@ export function FinishList({ refreshKey }: Props) {
                 <div className="item-brand">{item.brand}</div>
                 <div className="item-meta">
                   <span className="badge">{TYPE_LABELS[item.type] ?? item.type}</span>
+                  {item.thicknessMm && <span className="badge">{item.thicknessMm} mm</span>}
                   <span className="item-price">{item.pricePerSqmPln?.toFixed(2)} PLN/m²</span>
                 </div>
               </div>
@@ -184,6 +188,17 @@ export function FinishList({ refreshKey }: Props) {
                   {FINISH_TYPES.map(t => (
                     <option key={t.value} value={t.value}>{t.label}</option>
                   ))}
+                </select>
+              </div>
+              <div className="field">
+                <label className="field-label">Grubość okleiny (mm)</label>
+                <select
+                  className="field-input"
+                  value={editThicknessMm}
+                  onChange={e => setEditThicknessMm(Number(e.target.value) as FinishThicknessMm)}
+                >
+                  <option value={16}>16 mm</option>
+                  <option value={18}>18 mm</option>
                 </select>
               </div>
               <div className="field">

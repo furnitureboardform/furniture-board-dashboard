@@ -1,10 +1,13 @@
 export type FinishType = 'laminat' | 'akryl' | 'lakier';
 
+export type FinishThicknessMm = 16 | 18;
+
 export interface FinishOption {
   id: string;
   label: string;
   brand: string;
   type: FinishType;
+  thicknessMm: FinishThicknessMm;
   pricePerSqmPln: number;
   imageBase64?: string;
   createdAt?: number;
